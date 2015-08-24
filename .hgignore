@@ -1,0 +1,16 @@
+
+syntax: glob
+node_modules\
+out_js\*.js
+out_js\test\
+out_ugly\*.js
+out_ugly\test\
+*.pyc
+*.tmp_*
+.project
+.pydevproject
+.settings\*.*
+*.tpl.py
+server\temp\*.log
+*\__pycache__\*.*
+Thumbs.db
