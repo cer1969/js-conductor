@@ -23,5 +23,5 @@ gulp.task('tsc', function () {
 })
 
 gulp.task('default', function() {
-	gulp.watch('ts/*.ts', ["tsc"]);
+	gulp.watch('src_ts/*.ts', ["tsc"]);
 });

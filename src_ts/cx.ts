@@ -4,6 +4,7 @@ import checker = require('./checker');
 import k = require('./constants');
 import cat = require('./category');
 import cond = require('./conductor');
+import ccalc = require('./currentcalc');
 
 //----------------------------------------------------------------------------------------
 // Re-export check
@@ -39,3 +40,8 @@ export var CC_ALL = cat.CC_ALL;
 // Re-export Conductor
 
 export var Conductor = cond.Conductor;
+
+//----------------------------------------------------------------------------------------
+// Re-export CurrentCalc
+
+export var CurrentCalc = ccalc.CurrentCalc;
