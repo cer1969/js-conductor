@@ -7,8 +7,6 @@ out_ugly\*.js
 out_ugly\test\
 *.pyc
 *.tmp_*
-.project
-.pydevproject
 .settings\*.*
 *.tpl.py
 server\temp\*.log

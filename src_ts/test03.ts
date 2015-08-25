@@ -11,11 +11,16 @@ var cc = new cx.CurrentCalc(cu300);
 var current: number;
 var txt: string;
 
-[10, 15, 20, 25, 30].forEach(function (va, i, myarr1) {
-    [30, 35, 40, 45, 50].forEach(function (vc, j, myarr2) {
-        current = cc.getCurrent(va, vc);
-        txt = `i=${i}, j=${j}, Ta=${va.toFixed(2)}, Tc=${vc.toFixed(2)}, I=${current.toFixed(2)}`;
-        console.log(txt);
-    });
-});
+var tas = [10, 15, 20, 25, 30];
+var tcs = [30, 35, 40, 45, 50];
 
+var t1 = new Date().getTime();
+for (var i = 0; i < tas.length; i++) {
+    for (var j = 0; j < tcs.length; j++) {
+        current = cc.getCurrent(tas[i], tcs[j]);
+        txt = `i=${i}, j=${j}, Ta=${tas[i].toFixed(2)}, Tc=${tcs[j].toFixed(2)}, I=${current.toFixed(2)}`;
+        console.log(txt);
+    }
+}
+var t2 = new Date().getTime();
+console.log(t2-t1);
