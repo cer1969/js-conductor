@@ -28,7 +28,7 @@ class Check {
     
     _compare(compFunc, txte: string, limit) {
         if (!compFunc(this.value, limit)) {
-            var txt: string = `Required value ${txte} ${limit} (${this.value} entered)`;
+            var txt = `Required value ${txte} ${limit} (${this.value} entered)`;
             throw new RangeError(txt);
         }
         return this
