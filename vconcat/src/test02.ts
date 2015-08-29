@@ -1,6 +1,8 @@
 // CRISTIAN ECHEVERRÍA RABÍ
+/// <reference path="../../typings/node/node.d.ts" />
 
 import cx = require('./cx');
+import assert = require('assert');
 
 console.log(cx.TC_MAX);
 console.log(cx.CC_CUWELD.idx);
@@ -15,4 +17,11 @@ try {
     console.log(err.message);
 }
 
-cx.check(1/0).isFinite()
+assert.throws(
+	function() {
+		cx.check(1/0).isFinite();
+	},
+	RangeError
+);
+
+assert.equal(1,1);

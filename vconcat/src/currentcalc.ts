@@ -173,6 +173,10 @@ export class CurrentCalc {
         return this._conductor;
     }
     
+    set conductor(value) {
+    	throw new RangeError('CurrentCalc.conductor is readonly');
+    }
+    
     get altitude(): number {
         return this._altitude;
     }
