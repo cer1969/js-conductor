@@ -1,6 +1,7 @@
 
 syntax: glob
-node_modules\
+node_modules/*
+dist/*
 vconcat\src\cx.ts
 vconcat\out\
 out_js\*.js
