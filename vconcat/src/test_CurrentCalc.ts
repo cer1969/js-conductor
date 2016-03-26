@@ -1,6 +1,6 @@
 // CRISTIAN ECHEVERRÍA RABÍ
-/// <reference path="../../typings/node/node.d.ts" />
-/// <reference path="../../typings/mocha/mocha.d.ts" />
+/// <reference path="../../typings/main/ambient/node/index.d.ts" />
+/// <reference path="../../typings/main/ambient/mocha/index.d.ts" />
 
 import cx = require('./cx');
 import assert = require('assert');
