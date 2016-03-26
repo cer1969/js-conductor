@@ -4,7 +4,7 @@
   "description": "Se migra python cer.conductor a javascript",
   "main": "gulpfile.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "brow": "browserify dist/cx.js -o dist/cx.br.js -s cx"
   },
   "author": "cheve",
   "license": "MIT",
@@ -13,7 +13,6 @@
     "gulp": "^3.9.0",
     "gulp-concat": "^2.6.0",
     "gulp-rename": "^1.2.2",
-    "gulp-typescript": "^2.8.0",
     "gulp-uglify": "^1.2.0"
   }
 }

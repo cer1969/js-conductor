@@ -6,35 +6,31 @@ var
 	concat = require('gulp-concat'),
 	uglify = require('gulp-uglify'),
 	rename = require('gulp-rename'),
+    typescript = require('gulp-typescript'),
 	del = require('del');
 
 //----------------------------------------------------------------------------------------
 
 var cx_files = [
-    'src/checker.js',
-    'src/constants.js',
-    'src/category.js',
-    'src/conductor.js',
-    'src/currentcalc.js',
+    'vconcat/src/checker.ts',
+    'vconcat/src/constants.ts',
+    'vconcat/src/category.ts',
+    'vconcat/src/conductor.ts',
+    'vconcat/src/currentcalc.ts',
 ]
 
-gulp.task('make', function () {
-    var step1 = gulp.src(cx_files).pipe(concat('cx.js'));
+gulp.task('vc-make', function () {
+    var step1 = gulp.src(cx_files).pipe(concat('cx.ts'));
     
-    step1.pipe(gulp.dest('dist/'));
+    step1.pipe(gulp.dest('vconcat/src/'));
     
-    //var step2 = step1//.pipe(rename({suffix: '.min'}))
-    //.pipe(uglify())
-    //.pipe(gulp.dest('dist/'));
- 
-    //var step2 = step1.pipe(typescript({target: 'ES5', module: 'commonjs'}))
-    //.pipe(gulp.dest('vconcat/out/'));
-    //
-    //step2.pipe(rename({suffix: '.min'}))
-    //.pipe(uglify())
-    //.pipe(gulp.dest('vconcat/out/'));
+    var step2 = step1.pipe(typescript({target: 'ES5', module: 'commonjs'}))
+    .pipe(gulp.dest('vconcat/out/'));
+    
+    step2.pipe(rename({suffix: '.min'}))
+    .pipe(uglify())
+    .pipe(gulp.dest('vconcat/out/'));
 })
-
 
 gulp.task('vc-make-watch', function() {
 	gulp.watch(cx_files, ['vc-make']);
