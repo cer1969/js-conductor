@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        //"module": "commonjs",
+        "outFile": "./out/conductor.js",
+        "noImplicitAny": false,
+        "noImplicitUseStrict": false,
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "suppressImplicitAnyIndexErrors": true
+    },
+    "files": [
+        "checker.ts",
+        "constants.ts",
+        "category.ts",
+        "conductor.ts",
+        "currentcalc.ts"
+    ],
+    "compileOnSave": true,
+    "buildOnSave": false,
+    "atom": {
+        "rewriteTsconfig": false
+    }
+}
