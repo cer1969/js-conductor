@@ -4,15 +4,15 @@
 export class CurrentCalc {
     /*
     Object to calculate conductor current and temperatures.
-    
+
     Read-only properties
     conductor  : Conductor instance
-    
+
     Read-write properties
     altitude    : Altitude [m] = 300.0
     airVelocity : Velocity of air stream [ft/seg] =   2.0
     sunEffect   : Sun effect factor (0 to 1) = 1.0
-    emissivity  : Emissivity (0 to 1) = 0.5  
+    emissivity  : Emissivity (0 to 1) = 0.5
     formula     : Define formula for current calculation = CF_IEEE
     deltaTemp   : Temperature difference to determine equality [°C] = 0.0001
     */
@@ -23,21 +23,21 @@ export class CurrentCalc {
     private _emissivity = 0.5;
     private _formula = CF_IEEE;
     private _deltaTemp = 0.0001;
-    
+
     constructor(conductor) {
         /*
-        conductor : Conductor instance. 
+        conductor : Conductor instance.
         Valid values are required for r25, diameter and category.alpha
         */
         check(conductor.r25).gt(0);
         check(conductor.diameter).gt(0);
         check(conductor.category.alpha).gt(0).lt(1);
-        
+
         this._conductor = conductor;
     }
-    
+
     // Public methods
-    
+
     getResistance(tc:number): number {
         /*
         Returns resistance [Ohm/km]
@@ -46,7 +46,7 @@ export class CurrentCalc {
         check(tc).ge(TC_MIN).le(TC_MAX);
         return this._conductor.r25*(1 + this._conductor.category.alpha*(tc - 25));
     }
-    
+
     getCurrent(ta: number, tc:number): number {
         /*
         Returns current [ampere]
@@ -55,11 +55,11 @@ export class CurrentCalc {
         */
         check(ta).ge(TA_MIN).le(TA_MAX);
         check(tc).ge(TC_MIN).le(TC_MAX);
-        
+
         if (ta >= tc) {
             return 0.0;
         }
-        
+
         var D = this._conductor.diameter/25.4;                      // Diámetro en pulgadas
         var Pb = Math.pow(10, 1.880813592 - this._altitude/18336);  // Presión barométrica en cmHg
         var V = this._airVelocity*3600;                             // Vel. viento en pies/hora
@@ -69,7 +69,7 @@ export class CurrentCalc {
         var Uf = 0.04165 + 0.000111*Tm;                             // Viscosidad abs. aire ¿lb/(ft x hora)
         var Kf = 0.00739 + 0.0000227*Tm;                            // Coef. conductividad term. aire [Watt/(ft x °C)]
         var Qc = 0.283*Math.sqrt(Rf)*Math.pow(D, 0.75)*Math.pow(tc - ta, 1.25);  // watt/ft
-        
+
         if (V != 0) {
             var factor = D*Rf*V/Uf;
             var Qc1 = 0.1695*Kf*(tc - ta)*Math.pow(factor, 0.6);
@@ -88,14 +88,14 @@ export class CurrentCalc {
         var MK = Math.pow((ta + 273)/100, 4);
         var Qr = 0.138*D*this._emissivity*(LK - MK);
         var Qs = 3.87*D*this._sunEffect;
-        
-        if ((Qc + Qr) < Qs) { 
+
+        if ((Qc + Qr) < Qs) {
             return 0.0;
-        } else { 
+        } else {
             return Math.sqrt((Qc + Qr - Qs)/Rc);
         }
     }
-    
+
     getTc(ta: number, ic: number): number {
         /*
         Returns conductor temperature [ampere]
@@ -106,7 +106,7 @@ export class CurrentCalc {
         var _Imin = 0;
         var _Imax = this.getCurrent(ta, TC_MAX);
         check(ic).ge(_Imin).le(_Imax);   // Ensure ta <= Tc <= TC_MAX
-        
+
         var Tmin = ta;
         var Tmax = TC_MAX;
         var cuenta = 0;
@@ -128,7 +128,7 @@ export class CurrentCalc {
         }
         return Tmed;
     }
-    
+
     getTa(tc: number, ic: number): number {
         /*
         Returns ambient temperature [ampere]
@@ -136,24 +136,24 @@ export class CurrentCalc {
         ic : Current [ampere]
         */
         check(tc).ge(TC_MIN).le(TC_MAX);
-        
+
         var _Imin = this.getCurrent(TA_MAX, tc);
         var _Imax = this.getCurrent(TA_MIN, tc);
         check(ic).ge(_Imin).le(_Imax);  // Ensure TA_MIN =< Ta =< TA_MAX
-        
+
         var Tmin = TA_MIN;
         var Tmax = Math.min(TA_MAX, tc);
         if (Tmin >= Tmax) {
             return tc;
         }
-        
+
         var cuenta = 0;
         var Tmed: number;
         var Imed: number;
         while ((Tmax - Tmin) > this._deltaTemp) {
             Tmed = 0.5*(Tmin + Tmax);
             Imed = this.getCurrent(Tmed, tc);
-            if (Imed > ic) { 
+            if (Imed > ic) {
                 Tmin = Tmed;
             } else {
                 Tmax = Tmed;
@@ -166,69 +166,69 @@ export class CurrentCalc {
         }
         return Tmed;
     }
-    
+
     // Propiedades
-    
+
     get conductor() {
         return this._conductor;
     }
-    
+
     set conductor(value) {
     	throw new RangeError('CurrentCalc.conductor is readonly');
     }
-    
+
     get altitude(): number {
-        return this._altitude;
+        return this._altitude;/// <reference path="./constants.ts"/>
     }
-    
+
     set altitude(value: number) {
         check(value).ge(0);
         this._altitude = value;
     }
-    
+
     get airVelocity(): number {
         return this._airVelocity;
     }
-    
+
     set airVelocity(value: number) {
         check(value).ge(0);
         this._airVelocity = value;
     }
-    
+
     get sunEffect(): number {
         return this._sunEffect;
     }
-    
+
     set sunEffect(value: number) {
         check(value).ge(0).le(1);
         this._sunEffect = value;
     }
-    
+
     get emissivity(): number {
         return this._emissivity;
     }
-    
+
     set emissivity(value: number) {
         check(value).ge(0).le(1);
         this._emissivity = value;
     }
-    
+
     get formula(): string {
         return this._formula;
     }
-    
+
     set formula(value: string) {
         check(value).isIn([CF_CLASSIC, CF_IEEE]);
         this._formula = value;
     }
-    
+
     get deltaTemp(): number {
         return this._deltaTemp;
     }
-    
+
     set deltaTemp(value: number) {
         check(value).gt(0);
         this._deltaTemp = value;
     }
-    
+
 }

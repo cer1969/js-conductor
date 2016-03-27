@@ -1,7 +1,8 @@
-// CRISTIAN ECHEVERRÍA RABÍ
-
+namespace cx {
 
 //----------------------------------------------------------------------------------------
+// conductor.ts
+
 export class Conductor {
     /*
     Container for conductor characteristics
@@ -19,3 +20,5 @@ export class Conductor {
                 public area: number, public weight: number, public strength: number,
                 public r25: number, public hcap: number, public idx?: string) {}
 }
+
+} // namespace

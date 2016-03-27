@@ -1,4 +1,8 @@
-// CRISTIAN ECHEVERRÍA RABÍ
+namespace cx {
+
+//----------------------------------------------------------------------------------------
+// constants.ts
+
 /*
 Define constants for js.conductor
 
@@ -24,8 +28,6 @@ Conductor tension [kg]
 TENSION_MAX = 50000    Maximum conductor tension
 */
 
-//----------------------------------------------------------------------------------------
-
 // Current calculus formulas
 export var CF_CLASSIC: string = "CLASSIC";
 export var CF_IEEE: string   = "IEEE";
@@ -43,3 +45,5 @@ export var ITER_MAX: number = 20000;
 
 // Conductor tension
 export var TENSION_MAX: number = 50000;
+
+} // namespace

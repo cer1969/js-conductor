@@ -1,6 +1,8 @@
-// CRISTIAN ECHEVERRÍA RABÍ
+namespace cx {
 
 //----------------------------------------------------------------------------------------
+// category.ts
+
 export class Category {
     /*
     Represents a category of conductors with similar characteristics
@@ -15,7 +17,6 @@ export class Category {
                 public creep: number, public alpha: number, public idx?: string) {}
 }
 
-//----------------------------------------------------------------------------------------
 // Category instances to use as constants
 
 export var CC_CU: Category     = new Category('COPPER',      12000.0, 0.0000169,  0.0, 0.00374, 'CU');
@@ -26,3 +27,5 @@ export var CC_AAC: Category    = new Category('ALUMINUM',     5600.0, 0.0000230,
 export var CC_CUWELD: Category = new Category('COPPERWELD',  16200.0, 0.0000130,  0.0, 0.00380, 'CUWELD');
 export var CC_AASC: Category   = CC_AAAC;
 export var CC_ALL: Category    = CC_AAC;
+
+} // namespace

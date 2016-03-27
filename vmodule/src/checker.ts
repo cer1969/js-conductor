@@ -1,6 +1,8 @@
 // CRISTIAN ECHEVERRÍA RABÍ
 
 //----------------------------------------------------------------------------------------
+// checker.ts
+
 // Comparison functions
 
 function _lt(a, b): boolean {return a < b;}
@@ -15,15 +17,12 @@ function _isIn(a, blist): boolean {
     return false;
 }
 
-//----------------------------------------------------------------------------------------
 // Check class
 
-class Check {
+class _Check {
     /*
     Class for value testing with error raising
     */
-    
-    //private txtMessage: string = `Required value ${txte} ${limit} (${value} entered)`
     constructor(public value) {}
     
     _compare(compFunc, txte: string, limit) {
@@ -39,11 +38,18 @@ class Check {
     gt(limit) {return this._compare(_gt, ">", limit);}
     ge(limit) {return this._compare(_ge, ">=", limit);}
     isIn(blist) {return this._compare(_isIn, "in", blist);}
+    
+    isFinite() {
+    	if (!isFinite(this.value)) {
+    		var txt = `Number expected (${this.value} entered)`;
+            throw new RangeError(txt);
+    	}
+    	return this
+    }
 }
 
-//----------------------------------------------------------------------------------------
 // Public function check
 
-function check(value) {return new Check(value)}
-
-export = check;
+namespace cx {
+    export function check(value) {return new _Check(value)}
+}
