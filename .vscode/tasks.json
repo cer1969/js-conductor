@@ -1,0 +1,29 @@
+{
+    "version": "0.1.0",
+    "command": "npm",
+    "isShellCommand": true,
+    "showOutput": "always",
+    "args": ["run"],
+    "tasks": [
+        {
+            "taskName": "ts-brow",
+            "args": [],
+            "problemMatcher": "$msCompile" 
+        },
+        {
+            "taskName": "ts-test",
+            "args": [],
+            "problemMatcher": "$msCompile" 
+        },
+        {
+            "taskName": "ts-clean",
+            "args": [],
+            "problemMatcher": "$msCompile" 
+        },
+        {
+            "taskName": "ts-make",
+            "args": [],
+            "problemMatcher": "$msCompile" 
+        }
+    ]
+}
