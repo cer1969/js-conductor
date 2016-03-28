@@ -19,7 +19,7 @@ function _isIn(a, blist): boolean {
 
 // Check class
 
-class _Check {
+export class _Check {
     /*
     Class for value testing with error raising
     */
