@@ -1,3 +1,152 @@
+// CRISTIAN ECHEVERRÍA RABÍ
+
+//----------------------------------------------------------------------------------------
+// checker.ts
+
+// Comparison functions
+
+function _lt(a, b): boolean {return a < b;}
+function _le(a, b): boolean {return a <= b;}
+function _ge(a, b): boolean {return a >= b;}
+function _gt(a, b): boolean {return a > b;}
+
+function _isIn(a, blist): boolean {
+    if (blist.indexOf(a) != -1) {
+        return true;
+    }
+    return false;
+}
+
+// Check class
+
+export class _Check {
+    /*
+    Class for value testing with error raising
+    */
+    constructor(public value) {}
+    
+    _compare(compFunc, txte: string, limit) {
+        if (!compFunc(this.value, limit)) {
+            let txt = `Required value ${txte} ${limit} (${this.value} entered)`;
+            throw new RangeError(txt);
+        }
+        return this;
+    }
+    
+    lt(limit) {return this._compare(_lt, "<", limit);}
+    le(limit) {return this._compare(_le, "<=", limit);}
+    gt(limit) {return this._compare(_gt, ">", limit);}
+    ge(limit) {return this._compare(_ge, ">=", limit);}
+    isIn(blist) {return this._compare(_isIn, "in", blist);}
+    
+    isFinite() {
+    	if (!isFinite(this.value)) {
+    		let txt = `Number expected (${this.value} entered)`;
+            throw new RangeError(txt);
+    	}
+    	return this;
+    }
+}
+
+// Public function check
+
+export function check(value) {return new _Check(value)}
+
+//----------------------------------------------------------------------------------------
+// constants.ts
+
+/*
+Define constants for js.conductor
+
+Formula to use in CurrentCalc for current calculations
+CF_CLASSIC = "CLASSIC"    Identifies CLASSIC formula
+CF_IEEE   = "IEEE"      Identifies IEEE formula
+
+Ambient temperature in °C
+TA_MIN = -90    Minimum value for ambient temperature
+                World lowest -82.2°C Vostok Antartica 21/07/1983
+TA_MAX =  90    Maximum value for ambient temperature
+                World highest 58.2°C Libia 13/09/1922
+
+Conductor temperature [°C]
+TC_MIN =  -90    Minimum value for conductor temperature
+TC_MAX = 2000    Maximum value for conductor temperature = 2000°C
+                 Copper melt at 1083 °C
+
+Iterations
+ITER_MAX = 20000    Maximum iterations number = 20000
+
+Conductor tension [kg]
+TENSION_MAX = 50000    Maximum conductor tension
+*/
+
+// Current calculus formulas
+export const CF_CLASSIC: string = "CLASSIC";
+export const CF_IEEE: string   = "IEEE";
+
+// Ambient temperature
+export const TA_MIN: number = -90.0;
+export const TA_MAX: number =  90.0;
+
+// Conductor temperature
+export const TC_MIN: number =  -90.0;
+export const TC_MAX: number = 2000.0;
+
+// Iterations
+export const ITER_MAX: number = 20000;
+
+// Conductor tension
+export const TENSION_MAX: number = 50000;
+
+//----------------------------------------------------------------------------------------
+// category.ts
+
+export class Category {
+    /*
+    Represents a category of conductors with similar characteristics
+    name    : Name of conductor category
+    modelas : Modulus of elasticity [kg/mm2]
+    coefexp : Coefficient of Thermal Expansion [1/°C]
+    creep   : Creep [°C]
+    alpha   : Temperature coefficient of resistance [1/°C]
+    idx     : Database key
+    */
+    constructor(public name: string, public modelas: number, public coefexp: number, 
+                public creep: number, public alpha: number, public idx?: string) {}
+}
+
+// Category instances to use as constants
+
+export const CC_CU: Category     = new Category('COPPER',      12000.0, 0.0000169,  0.0, 0.00374, 'CU');
+export const CC_AAAC: Category   = new Category('AAAC (AASC)',  6450.0, 0.0000230, 20.0, 0.00340, 'AAAC');
+export const CC_ACAR: Category   = new Category('ACAR',         6450.0, 0.0000250, 20.0, 0.00385, 'ACAR');
+export const CC_ACSR: Category   = new Category('ACSR',         8000.0, 0.0000191, 20.0, 0.00395, 'ACSR');
+export const CC_AAC: Category    = new Category('ALUMINUM',     5600.0, 0.0000230, 20.0, 0.00395, 'AAC');
+export const CC_CUWELD: Category = new Category('COPPERWELD',  16200.0, 0.0000130,  0.0, 0.00380, 'CUWELD');
+export const CC_AASC: Category   = CC_AAAC;
+export const CC_ALL: Category    = CC_AAC;
+
+//----------------------------------------------------------------------------------------
+// conductor.ts
+
+export class Conductor {
+    /*
+    Container for conductor characteristics
+    name     : Name of conductor
+    category : Category instance
+    diameter : Diameter [mm]
+    area     : Cross section area [mm2]
+    weight   : Weight per unit [kg/m]
+    strength : Rated strength [kg]
+    r25      : Resistance at 25°C [Ohm/km]
+    hcap     : Heat capacity [kcal/(ft*°C)]
+    idx      : Database key
+    */
+    constructor(public name: string, public category: Category, public diameter: number, 
+                public area: number, public weight: number, public strength: number,
+                public r25: number, public hcap: number, public idx?: string) {}
+}
+
 //----------------------------------------------------------------------------------------
 // currentcalc.ts
 
@@ -231,4 +380,32 @@ export class CurrentCalc {
         this._deltaTemp = value;
     }
 
+}
+
+//----------------------------------------------------------------------------------------
+// operatingtable.ts
+
+export class OperatingItem {
+    /*
+    Container for conductor and operating conditions
+    
+    Read-only properties
+    currentcalc : CurrentCalc instance
+    tempMaxOp   : Maximux operating temperature for currentcalc.conductor [°C]
+    nsc         : Number of subconductor per fase
+    */
+    private _currentcalc;
+    private _tempMaxOp;
+    private _nsc;
+    
+    constructor(currentcalc: CurrentCalc, tempMaxOp=50.0, nsc=1, altitude=300.0, emissivity=0.5) {
+        currentcalc.altitude = altitude;
+        currentcalc.emissivity = emissivity;
+        check(tempMaxOp).ge(TC_MIN).le(TC_MAX);
+        check(nsc).ge(1);
+        
+        this._currentcalc = currentcalc;
+        this._tempMaxOp = tempMaxOp;
+        this._nsc = nsc;
+    }
 }

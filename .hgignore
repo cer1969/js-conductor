@@ -2,11 +2,11 @@
 syntax: glob
 node_modules/*
 release/*
-vconcat\src\cx.ts
-vconcat\out\
+vconcat/out/
+vconcat/src/cx.ts
+
 *.pyc
 *.tmp_*
-.settings\*.*
 *.tpl.py
 server\temp\*.log
 *\__pycache__\*.*

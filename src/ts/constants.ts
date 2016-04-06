@@ -27,19 +27,19 @@ TENSION_MAX = 50000    Maximum conductor tension
 */
 
 // Current calculus formulas
-export var CF_CLASSIC: string = "CLASSIC";
-export var CF_IEEE: string   = "IEEE";
+export const CF_CLASSIC: string = "CLASSIC";
+export const CF_IEEE: string   = "IEEE";
 
 // Ambient temperature
-export var TA_MIN: number = -90.0;
-export var TA_MAX: number =  90.0;
+export const TA_MIN: number = -90.0;
+export const TA_MAX: number =  90.0;
 
 // Conductor temperature
-export var TC_MIN: number =  -90.0;
-export var TC_MAX: number = 2000.0;
+export const TC_MIN: number =  -90.0;
+export const TC_MAX: number = 2000.0;
 
 // Iterations
-export var ITER_MAX: number = 20000;
+export const ITER_MAX: number = 20000;
 
 // Conductor tension
-export var TENSION_MAX: number = 50000;
+export const TENSION_MAX: number = 50000;

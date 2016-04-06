@@ -1,5 +1,30 @@
 //----------------------------------------------------------------------------------------
-// currentcalc.ts
+// operatingtable.ts
+
+export class OperatingItem {
+    /*
+    Container for conductor and operating conditions
+    
+    Read-only properties
+    currentcalc : CurrentCalc instance
+    tempMaxOp   : Maximux operating temperature for currentcalc.conductor [°C]
+    nsc         : Number of subconductor per fase
+    */
+    private _currentcalc;
+    private _tempMaxOp;
+    private _nsc;
+    
+    constructor(currentcalc: CurrentCalc, tempMaxOp=50.0, nsc=1, altitude=300.0, emissivity=0.5) {
+        currentcalc.altitude = altitude;
+        currentcalc.emissivity = emissivity;
+        check(tempMaxOp).ge(TC_MIN).le(TC_MAX);
+        check(nsc).ge(1);
+        
+        this._currentcalc = currentcalc;
+        this._tempMaxOp = tempMaxOp;
+        this._nsc = nsc;
+    }
+}
 
 export class CurrentCalc {
     /*
@@ -24,7 +49,7 @@ export class CurrentCalc {
     private _formula = CF_IEEE;
     private _deltaTemp = 0.0001;
 
-    constructor(conductor: Conductor) {
+    constructor(conductor) {
         /*
         conductor : Conductor instance.
         Valid values are required for r25, diameter and category.alpha
@@ -60,20 +85,20 @@ export class CurrentCalc {
             return 0.0;
         }
 
-        let D = this._conductor.diameter/25.4;                                  // Diámetro en pulgadas
-        let Pb = Math.pow(10, 1.880813592 - this._altitude/18336);              // Presión barométrica en cmHg
-        let V = this._airVelocity*3600;                                         // Vel. viento en pies/hora
-        let Rc = this.getResistance(tc)*0.0003048;                              // Resistencia en ohm/pies
-        let Tm = 0.5*(tc + ta);                                                 // Temperatura media
-        let Rf = 0.2901577*Pb/(273 + Tm);                                       // Densidad rel.aire ¿lb/ft^3?
-        let Uf = 0.04165 + 0.000111*Tm;                                         // Viscosidad abs. aire ¿lb/(ft x hora)
-        let Kf = 0.00739 + 0.0000227*Tm;                                        // Coef. conductividad term. aire [Watt/(ft x °C)]
-        let Qc = 0.283*Math.sqrt(Rf)*Math.pow(D, 0.75)*Math.pow(tc - ta, 1.25); // watt/ft
+        var D = this._conductor.diameter/25.4;                      // Diámetro en pulgadas
+        var Pb = Math.pow(10, 1.880813592 - this._altitude/18336);  // Presión barométrica en cmHg
+        var V = this._airVelocity*3600;                             // Vel. viento en pies/hora
+        var Rc = this.getResistance(tc)*0.0003048;                  // Resistencia en ohm/pies
+        var Tm = 0.5*(tc + ta);                                     // Temperatura media
+        var Rf = 0.2901577*Pb/(273 + Tm);                           // Densidad rel.aire ¿lb/ft^3?
+        var Uf = 0.04165 + 0.000111*Tm;                             // Viscosidad abs. aire ¿lb/(ft x hora)
+        var Kf = 0.00739 + 0.0000227*Tm;                            // Coef. conductividad term. aire [Watt/(ft x °C)]
+        var Qc = 0.283*Math.sqrt(Rf)*Math.pow(D, 0.75)*Math.pow(tc - ta, 1.25);  // watt/ft
 
         if (V != 0) {
-            let factor = D*Rf*V/Uf;
-            let Qc1 = 0.1695*Kf*(tc - ta)*Math.pow(factor, 0.6);
-            let Qc2 = Kf*(tc - ta)*(1.01 + 0.371*Math.pow(factor, 0.52));
+            var factor = D*Rf*V/Uf;
+            var Qc1 = 0.1695*Kf*(tc - ta)*Math.pow(factor, 0.6);
+            var Qc2 = Kf*(tc - ta)*(1.01 + 0.371*Math.pow(factor, 0.52));
             if (this._formula == CF_IEEE) {    // IEEE criteria
                 Qc = Math.max(Qc, Qc1, Qc2);
             } else {                             // CLASSIC criteria
@@ -84,10 +109,10 @@ export class CurrentCalc {
                 }
             }
         }
-        let LK = Math.pow((tc + 273)/100, 4);
-        let MK = Math.pow((ta + 273)/100, 4);
-        let Qr = 0.138*D*this._emissivity*(LK - MK);
-        let Qs = 3.87*D*this._sunEffect;
+        var LK = Math.pow((tc + 273)/100, 4);
+        var MK = Math.pow((ta + 273)/100, 4);
+        var Qr = 0.138*D*this._emissivity*(LK - MK);
+        var Qs = 3.87*D*this._sunEffect;
 
         if ((Qc + Qr) < Qs) {
             return 0.0;
@@ -103,15 +128,15 @@ export class CurrentCalc {
         ic : Current [ampere]
         */
         check(ta).ge(TA_MIN).le(TA_MAX);
-        let _Imin = 0;
-        let _Imax = this.getCurrent(ta, TC_MAX);
+        var _Imin = 0;
+        var _Imax = this.getCurrent(ta, TC_MAX);
         check(ic).ge(_Imin).le(_Imax);   // Ensure ta <= Tc <= TC_MAX
 
-        let Tmin = ta;
-        let Tmax = TC_MAX;
-        let cuenta = 0;
-        let Tmed: number;
-        let Imed: number;
+        var Tmin = ta;
+        var Tmax = TC_MAX;
+        var cuenta = 0;
+        var Tmed: number;
+        var Imed: number;
         while ((Tmax - Tmin) > this._deltaTemp) {
             Tmed = 0.5*(Tmin + Tmax);
             Imed = this.getCurrent(ta, Tmed);
@@ -122,7 +147,7 @@ export class CurrentCalc {
             }
             cuenta = cuenta + 1;
             if (cuenta > ITER_MAX) {
-                let err_msg = `getTc(): N° iterations > ${ITER_MAX}`;
+                var err_msg = `getTc(): N° iterations > ${ITER_MAX}`;
                 throw new RangeError(err_msg);
             }
         }
@@ -137,19 +162,19 @@ export class CurrentCalc {
         */
         check(tc).ge(TC_MIN).le(TC_MAX);
 
-        let _Imin = this.getCurrent(TA_MAX, tc);
-        let _Imax = this.getCurrent(TA_MIN, tc);
+        var _Imin = this.getCurrent(TA_MAX, tc);
+        var _Imax = this.getCurrent(TA_MIN, tc);
         check(ic).ge(_Imin).le(_Imax);  // Ensure TA_MIN =< Ta =< TA_MAX
 
-        let Tmin = TA_MIN;
-        let Tmax = Math.min(TA_MAX, tc);
+        var Tmin = TA_MIN;
+        var Tmax = Math.min(TA_MAX, tc);
         if (Tmin >= Tmax) {
             return tc;
         }
 
-        let cuenta = 0;
-        let Tmed: number;
-        let Imed: number;
+        var cuenta = 0;
+        var Tmed: number;
+        var Imed: number;
         while ((Tmax - Tmin) > this._deltaTemp) {
             Tmed = 0.5*(Tmin + Tmax);
             Imed = this.getCurrent(Tmed, tc);
@@ -160,7 +185,7 @@ export class CurrentCalc {
             }
             cuenta = cuenta + 1;
             if (cuenta > ITER_MAX) {
-                let err_msg = `getTa(): N° iterations > ${ITER_MAX}`;
+                var err_msg = `getTa(): N° iterations > ${ITER_MAX}`;
                 throw new RangeError(err_msg);
             }
         }
