@@ -15,7 +15,7 @@
         "conductor.ts",
         "currentcalc.ts"
     ],
-    "compileOnSave": true,
+    "compileOnSave": false,
     "buildOnSave": false,
     "atom": {
         "rewriteTsconfig": false
