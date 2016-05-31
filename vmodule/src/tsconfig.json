@@ -1,8 +1,9 @@
 {
     "compilerOptions": {
         "target": "es5",
-        //"module": "commonjs",
-        "outFile": "./out/conductor.js",
+        "module": "commonjs",
+        //"outFile": "./out/conductor.js",
+        "outDir": "./out/",
         "noImplicitAny": false,
         "noImplicitUseStrict": false,
         "removeComments": true,
@@ -14,7 +15,8 @@
         "constants.ts",
         "category.ts",
         "conductor.ts",
-        "currentcalc.ts"
+        "currentcalc.ts",
+        "cx.ts"
     ],
     "compileOnSave": true,
     "buildOnSave": false,

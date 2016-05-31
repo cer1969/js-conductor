@@ -1,7 +1,7 @@
 // CRISTIAN ECHEVERRÍA RABÍ
 
-var cx = require('../release/conductor');
-//var cx = require('../dist/cx.br');
+var cx = require('../vmodule/out/cx.min.js');
+//var cx = require('../release/conductor');
 var assert = require('assert');
 
 //----------------------------------------------------------------------------------------

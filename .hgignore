@@ -1,9 +1,8 @@
 
 syntax: glob
-node_modules/*
+*/node_modules/*
+vmodule/out/
 release/*
-vconcat/out/
-vconcat/src/cx.ts
 
 *.pyc
 *.tmp_*
