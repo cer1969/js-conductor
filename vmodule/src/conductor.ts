@@ -1,7 +1,8 @@
-namespace cx {
+// CRISTIAN ECHEVERRÍA RABÍ
 
-//----------------------------------------------------------------------------------------
-// conductor.ts
+import {Category} from "./category"
+
+//--------------------------------------------------------------------------------------------------
 
 export class Conductor {
     /*
@@ -16,9 +17,7 @@ export class Conductor {
     hcap     : Heat capacity [kcal/(ft*°C)]
     idx      : Database key
     */
-    constructor(public name: string, public category, public diameter: number, 
+    constructor(public name: string, public category: Category, public diameter: number, 
                 public area: number, public weight: number, public strength: number,
                 public r25: number, public hcap: number, public idx?: string) {}
 }
-
-} // namespace

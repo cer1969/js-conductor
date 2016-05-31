@@ -1,7 +1,8 @@
 // CRISTIAN ECHEVERRÍA RABÍ
 
+var cx = require('../vmodule/out/cx.min.js');
 //var cx = require('../dist/cx');
-var cx = require('../dist/cx.br');
+//var cx = require('../dist/cx.br');
 
 var cu300 = new cx.Conductor("CU 300 MCM", cx.CC_CU, 15.95, 152.00, 1.378, 6123.0, 0.12270, 0, "");
 var cc = new cx.CurrentCalc(cu300);

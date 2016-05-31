@@ -1,7 +1,7 @@
 // CRISTIAN ECHEVERRÍA RABÍ
 
-//var cx = require('../dist/cx');
-var cx = require('../dist/cx.br');
+var cx = require('../vmodule/out/cx.min.js');
+//var cx = require('../dist/cx.br');
 
 console.log(cx.TC_MAX);
 console.log(cx.CC_CUWELD.idx);

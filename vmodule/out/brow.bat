@@ -1,1 +1,0 @@
-browserify cx.js -o cx.br.js -s cx
