@@ -5,6 +5,7 @@ module.exports = {
     output: {
         path: './out',
         filename: 'cx.min.js',
+        library: 'cx',
         libraryTarget: "commonjs2"
     },
     resolve: {
