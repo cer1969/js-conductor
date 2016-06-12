@@ -1,8 +1,7 @@
 
 syntax: glob
-*/node_modules/*
-vmodule/out/
-release/*
+*/node_modules/
+*/out/
 
 *.pyc
 *.tmp_*
