@@ -21,7 +21,7 @@ export class CurrentCalc {
     formula     : Define formula for current calculation = CF_IEEE
     deltaTemp   : Temperature difference to determine equality [°C] = 0.0001
     */
-    private _conductor;
+    private _conductor: Conductor;
     private _altitude = 300.0;
     private _airVelocity = 2.0;
     private _sunEffect = 1.0;
