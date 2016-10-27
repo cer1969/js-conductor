@@ -1,26 +1,26 @@
 {
-    "compilerOptions": {
-        "target": "es6",
-        "module": "es6",
-        "outDir": "./es6/",
-        "noImplicitAny": false,
-        "noImplicitUseStrict": false,
-        "removeComments": false,
-        "preserveConstEnums": true,
-        "suppressImplicitAnyIndexErrors": true
-    },
-    "files": [
-        "checker.ts",
-        "constants.ts",
-        "category.ts",
-        "conductor.ts",
-        "currentcalc.ts",
-        "operatingtable.ts",
-        "cx.ts"
-    ],
-    "compileOnSave": false,
-    "buildOnSave": false,
-    "atom": {
-        "rewriteTsconfig": false
-    }
+	"compilerOptions": {
+		"target": "es6",
+		"module": "es6",
+		"outDir": "./es6/",
+		"noImplicitAny": false,
+		"noImplicitUseStrict": false,
+		"removeComments": false,
+		"preserveConstEnums": true,
+		"suppressImplicitAnyIndexErrors": true
+	},
+	"files": [
+		"checker.ts",
+		"constants.ts",
+		"category.ts",
+		"conductor.ts",
+		"currentcalc.ts",
+		"operatingtable.ts",
+		"cx.ts"
+	],
+	"compileOnSave": false,
+	"buildOnSave": false,
+	"atom": {
+		"rewriteTsconfig": false
+	}
 }

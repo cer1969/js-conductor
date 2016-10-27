@@ -1,26 +1,26 @@
 {
-    "compilerOptions": {
-        "target": "es5",
-        "module": "commonjs",
-        "outDir": "./out/",
-        "noImplicitAny": true,
-        "noImplicitUseStrict": false,
-        "removeComments": true,
-        "preserveConstEnums": true,
-        "suppressImplicitAnyIndexErrors": true
-    },
-    "files": [
-        "checker.ts",
-        "constants.ts",
-        "category.ts",
-        "conductor.ts",
-        "currentcalc.ts",
-        "operatingtable.ts",
-        "cx.ts"
-    ],
-    "compileOnSave": true,
-    "buildOnSave": false,
-    "atom": {
-        "rewriteTsconfig": false
-    }
+	"compilerOptions": {
+		"target": "es5",
+		"module": "commonjs",
+		"outDir": "./out/",
+		"noImplicitAny": true,
+		"noImplicitUseStrict": false,
+		"removeComments": true,
+		"preserveConstEnums": true,
+		"suppressImplicitAnyIndexErrors": true
+	},
+	"files": [
+		"checker.ts",
+		"constants.ts",
+		"category.ts",
+		"conductor.ts",
+		"currentcalc.ts",
+		"operatingtable.ts",
+		"cx.ts"
+	],
+	"compileOnSave": true,
+	"buildOnSave": false,
+	"atom": {
+		"rewriteTsconfig": false
+	}
 }
