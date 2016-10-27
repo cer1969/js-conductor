@@ -1,19 +1,19 @@
 {
-	"name": "cer-conductor",
-	"version": "1.0.0",
-	"description": "",
-	"main": "index.js",
-	"scripts": {
-		"test": "mocha",
-		"build": "webpack"
-	},
-	"author": "Cristian Echeverria <cer1969@gmail.com>",
-	"license": "MIT",
-	"dependencies": {
-		"ts-loader": "^0.8.2",
-		"typescript": "^1.8.10"
-	},
-	"devDependencies": {
-		"webpack": "^1.13.1"
-	}
+  "name": "cer-conductor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha",
+    "build": "webpack"
+  },
+  "author": "Cristian Echeverria <cer1969@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "ts-loader": "^0.8.2",
+    "typescript": "^2.0.6"
+  },
+  "devDependencies": {
+    "webpack": "^1.13.1"
+  }
 }
